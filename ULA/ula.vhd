@@ -12,7 +12,7 @@ entity ula is
         overflow : out std_logic;
         zero : out std_logic;
         negative : out std_logic;
-        result : out unsigned(15 downto 0);
+        result : out unsigned(15 downto 0)
     );
 end ula;
 
@@ -44,11 +44,6 @@ begin
     addi_full  <= ('0' & in_a) + ('0' & value_immediate);
     subbi_full <= ('0' & in_a) - ('0' & value_immediate) - ('0' & borrow_signal);
 
-    -- Convert unsigned to signed for overflow detection
-    signed_a    <= signed(in_a);
-    signed_b    <= signed(in_b);
-    signed_vimm <= signed(value_immediate);
-    signed_res  <= signed(result_signal);
 
     -- Perform operations based on the selected operation
     add_result <= in_a + in_b;
@@ -70,7 +65,7 @@ begin
     signed_res_msb <= result_signal(15);
 
     -- Zero flag
-    zero <= '1' when result_signal = (others => '0') else '0';
+    zero <= '1' when result_signal = to_unsigned(0, 16) else '0';
 
     -- Negative flag
     negative <= result_signal(15);
@@ -83,11 +78,12 @@ begin
                  else '0';
 
     -- Overflow detection
-    overflow <= '1' when (signed_a_msb = "0" and signed_second_msb = "0" and signed_res_msb = "1" and (sel_op = "00" or sel_op = "10")) or
-                     (signed_a_msb = "1" and signed_second_msb = "1" and signed_res_msb = "0" and (sel_op = "00" or sel_op = "10")) or
-                    (signed_a_msb = "0" and signed_second_msb = "1" and signed_res_msb = "1" and (sel_op = "01" or sel_op = "11")) or
-                    (signed_a_msb = "1" and signed_second_msb = "0" and signed_res_msb = "0" and (sel_op = "01" or sel_op = "11"))
-               else '0';
+    overflow <= '1' when (signed_a_msb = '0' and signed_second_msb = '0' and signed_res_msb = '1' and (sel_op = "00" or sel_op = "10")) or
+                        (signed_a_msb = '1' and signed_second_msb = '1' and signed_res_msb = '0' and (sel_op = "00" or sel_op = "10")) or
+                        (signed_a_msb = '0' and signed_second_msb = '1' and signed_res_msb = '1' and (sel_op = "01" or sel_op = "11")) or
+                        (signed_a_msb = '1' and signed_second_msb = '0' and signed_res_msb = '0' and (sel_op = "01" or sel_op = "11"))
+                    else '0';
+
 
 
     result <= result_signal;
