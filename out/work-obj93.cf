@@ -1,0 +1,19 @@
+v 4
+file "/home/gaspad/prog/ArqComp/RISC-V/" "sim/top_level_tb.vhd" "a34cebac2974f67747f7da053f3532869e7e5a6d" "20250523171929.860":
+  entity top_level_tb at 1( 0) + 0 on 21;
+  architecture a_tb of top_level_tb at 8( 113) + 0 on 22;
+file "/home/gaspad/prog/ArqComp/RISC-V/" "src/ULA/ula.vhd" "fbf70bdebb3654a8fca1e958a364453764045165" "20250523171923.991":
+  entity ula at 1( 0) + 0 on 17;
+  architecture a_ula of ula at 19( 488) + 0 on 18;
+file "/home/gaspad/prog/ArqComp/RISC-V/" "src/banco_reg.vhd" "40de2117de3db3491503f7aa5a00741764b55191" "20250523171918.543":
+  entity banco_reg at 1( 0) + 0 on 13;
+  architecture a_banco_reg of banco_reg at 17( 479) + 0 on 14;
+file "/home/gaspad/prog/ArqComp/RISC-V/" "src/reg_16.vhd" "a7d3a7d2b4f9ab21ad4661fc9bcd2934165aa218" "20250523171915.415":
+  entity reg16 at 1( 0) + 0 on 11;
+  architecture a_reg16 of reg16 at 15( 319) + 0 on 12;
+file "/home/gaspad/prog/ArqComp/RISC-V/" "src/ULA/acumulador.vhd" "f44886d7cb5b456d9606d491dff1b09dc25972c2" "20250523171921.256":
+  entity acumulador at 1( 0) + 0 on 15;
+  architecture a_acumulador of acumulador at 15( 325) + 0 on 16;
+file "/home/gaspad/prog/ArqComp/RISC-V/" "src/top_level.vhd" "dde595c3be88f6e41335796d25a07cc34a723b35" "20250523171926.809":
+  entity top_level at 1( 0) + 0 on 19;
+  architecture a_top_level of top_level at 31( 1040) + 0 on 20;

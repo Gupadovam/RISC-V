@@ -1,0 +1,17 @@
+
+# How to run evertyhing properly:
+ghdl --clean --workdir=out
+
+ghdl -a --workdir=out src/reg_16.vhd
+ghdl -a --workdir=out src/banco_reg.vhd
+ghdl -a --workdir=out src/ULA/acumulador.vhd
+ghdl -a --workdir=out src/ULA/ula.vhd
+ghdl -a --workdir=out src/top_level.vhd
+ghdl -a --workdir=out sim/top_level_tb.vhd
+
+ghdl -e --workdir=out top_level_tb
+ghdl -r --workdir=out top_level_tb --wave=out/top_level.ghw
+
+gtkwave out/top_level.ghw
+
+*Note:* If you already have a .ghw file with each desired signal displayed, you can execute it with 'gtkwave filename.ghw'
