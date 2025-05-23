@@ -82,7 +82,6 @@ begin
                     else '0';
 
 
-
     result <= result_signal;
 
 end a_ula;
