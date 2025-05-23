@@ -75,15 +75,17 @@ begin
     rst_process : process
     begin
         rst_tb <= '1';
-        wait for 40 ns;
+        wait for CLK_PERIOD;
         rst_tb <= '0';
         wait;
     end process;
 
-    -- Estímulos de teste
+    -- Teste
     stim_proc : process
     begin
-        wait for 60 ns;
+        wait for CLK_PERIOD;
+		-- wait until rst_tb = '0';
+        -- wait until rising_edge(clk_tb);
 
         -- LD A, #10
         value_immediate_tb <= to_unsigned(10, 16);
@@ -100,21 +102,21 @@ begin
         wait for CLK_PERIOD;
         wr_bank_tb <= '0';
 
-        -- LD A, #5
+        -- ADDI A, A, #5
         value_immediate_tb <= to_unsigned(5, 16);
         sel_op_tb <= "10";
         wr_acum_tb <= '1';
         wait for CLK_PERIOD;
         wr_acum_tb <= '0';
 
-        -- ADD A, R1
+        -- ADD A, A, R1
         sel_op_tb <= "00"; -- ADD
         sel_reg_tb <= to_unsigned(1, 3);
         wr_acum_tb <= '1';
         wait for CLK_PERIOD;
         wr_acum_tb <= '0';
 
-        -- SUBB A, R1
+        -- SUBB A, A, R1
         sel_op_tb <= "01"; -- SUBB
         borrow_in_tb <= '0';
         wr_acum_tb <= '1';

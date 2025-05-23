@@ -51,6 +51,7 @@ begin
     end generate;
 
     -- Multiplexador para seleção de leitura
+	-- TODO: arrancar esse cara e fazer um MUX padrao
     process(rd_sel, regs_out)
     begin
         case to_integer(rd_sel) is
