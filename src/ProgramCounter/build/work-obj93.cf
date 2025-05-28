@@ -1,0 +1,10 @@
+v 4
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\ProgramCounter\" "program_counter_manager.vhd" "e433505e8cac8304c3665f5cff2101017bc90236" "20250528083612.327":
+  entity program_counter_manager at 1( 0) + 0 on 35;
+  architecture a_program_counter_manager of program_counter_manager at 17( 403) + 0 on 36;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\ProgramCounter\" "program_counter.vhd" "3446885f6b8f47a0e317d0527e68a2c0ea214827" "20250528083612.287":
+  entity program_counter at 1( 0) + 0 on 33;
+  architecture a_program_counter of program_counter at 15( 313) + 0 on 34;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\ProgramCounter\" "program_counter_manager_tb.vhd" "e84c4c331f766d211e547c17155d322dab22588e" "20250528083612.509":
+  entity program_counter_manager_tb at 1( 0) + 0 on 37;
+  architecture a_program_counter_manager of program_counter_manager_tb at 8( 127) + 0 on 38;

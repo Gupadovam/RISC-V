@@ -1,0 +1,31 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Wed May 28 08:35:20 2025
+[*]
+[dumpfile] "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\ProgramCounter\build\program_counter_manager_tb.ghw"
+[dumpfile_mtime] "Wed May 28 08:35:01 2025"
+[dumpfile_size] 2409
+[savefile] "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\ProgramCounter\program_counter_manager_config.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-27.665604 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.program_counter_manager_tb.
+[sst_width] 197
+[signals_width] 158
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@28
+top.program_counter_manager_tb.clk
+top.program_counter_manager_tb.rst
+top.program_counter_manager_tb.wr_en_s
+top.program_counter_manager_tb.jump_en_s
+@22
+#{top.program_counter_manager_tb.jump_addr_s[6:0]} top.program_counter_manager_tb.jump_addr_s[6] top.program_counter_manager_tb.jump_addr_s[5] top.program_counter_manager_tb.jump_addr_s[4] top.program_counter_manager_tb.jump_addr_s[3] top.program_counter_manager_tb.jump_addr_s[2] top.program_counter_manager_tb.jump_addr_s[1] top.program_counter_manager_tb.jump_addr_s[0]
+#{top.program_counter_manager_tb.opcode_s[6:0]} top.program_counter_manager_tb.opcode_s[6] top.program_counter_manager_tb.opcode_s[5] top.program_counter_manager_tb.opcode_s[4] top.program_counter_manager_tb.opcode_s[3] top.program_counter_manager_tb.opcode_s[2] top.program_counter_manager_tb.opcode_s[1] top.program_counter_manager_tb.opcode_s[0]
+#{top.program_counter_manager_tb.data_out_s[6:0]} top.program_counter_manager_tb.data_out_s[6] top.program_counter_manager_tb.data_out_s[5] top.program_counter_manager_tb.data_out_s[4] top.program_counter_manager_tb.data_out_s[3] top.program_counter_manager_tb.data_out_s[2] top.program_counter_manager_tb.data_out_s[1] top.program_counter_manager_tb.data_out_s[0]
+@28
+top.program_counter_manager_tb.finished
+[pattern_trace] 1
+[pattern_trace] 0

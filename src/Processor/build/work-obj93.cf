@@ -1,0 +1,22 @@
+v 4
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ControlUnit/control_unit.vhd" "2cb96cbfe491a6dc866bad8c5f6725905d5a5061" "20250528090107.948":
+  entity control_unit at 1( 0) + 0 on 121;
+  architecture a_control_unit of control_unit at 14( 290) + 0 on 122;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ROM/rom.vhd" "75c18a4fbcfcb855834a1a1644373e8dfacbeaff" "20250528090107.909":
+  entity rom at 1( 0) + 0 on 119;
+  architecture a_rom of rom at 13( 232) + 0 on 120;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "processor_tb.vhd" "49c8811173217eb483c626adf71772e2aae528ff" "20250528090108.033":
+  entity processor_tb at 1( 0) + 0 on 125;
+  architecture a_processor_tb of processor_tb at 8( 113) + 0 on 126;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ProgramCounter/program_counter.vhd" "3446885f6b8f47a0e317d0527e68a2c0ea214827" "20250528090107.830":
+  entity program_counter at 1( 0) + 0 on 115;
+  architecture a_program_counter of program_counter at 15( 313) + 0 on 116;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../StateMachine/state_machine.vhd" "be2344fd1b4b4f084d7090ffac5dd990646144ef" "20250528090107.791":
+  entity state_machine at 4( 40) + 0 on 113;
+  architecture a_state_machine of state_machine at 16( 274) + 0 on 114;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ProgramCounter/program_counter_manager.vhd" "e433505e8cac8304c3665f5cff2101017bc90236" "20250528090107.869":
+  entity program_counter_manager at 1( 0) + 0 on 117;
+  architecture a_program_counter_manager of program_counter_manager at 17( 403) + 0 on 118;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "processor.vhd" "38f734e2032858314d8664581fc1e89b2d749c1a" "20250528090107.994":
+  entity processor at 1( 0) + 0 on 123;
+  architecture a_processor of processor at 12( 186) + 0 on 124;

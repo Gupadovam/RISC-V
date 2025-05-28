@@ -1,0 +1,25 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Wed May 28 08:20:12 2025
+[*]
+[dumpfile] "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\StateMachine\build\state_machine_tb.ghw"
+[dumpfile_mtime] "Wed May 28 08:19:47 2025"
+[dumpfile_size] 644
+[savefile] "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\StateMachine\state_machine_tb_wave_config.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-28.613659 49000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.state_machine_tb.
+[sst_width] 197
+[signals_width] 118
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@28
+top.state_machine_tb.clk
+top.state_machine_tb.rst
+top.state_machine_tb.finished
+#{top.state_machine_tb.estado[1:0]} top.state_machine_tb.estado[1] top.state_machine_tb.estado[0]
+[pattern_trace] 1
+[pattern_trace] 0
