@@ -15,3 +15,19 @@ The script will typically:
     - Run the simulation (e.g., executing the `processor_tb.vhd` testbench).
     - Generate a `.vcd` waveform file (e.g., `waveform.vcd`) in the project root or a `waveforms/` directory.
     - Open the generated `.vcd` file in GTKWave. If a `.gtkw` save file (e.g., `default_view.gtkw`) is present and configured in the script, it may load a pre-defined signal view. Otherwise, you'll need to add signals manually in GTKWave.
+
+| Opcode |     Função    | Instrução 
+|--------|---------------| --------- |
+|  00000  |    nop       | OOOOO_XXX_XXXX_XXXX
+|  00001  |    add       | OOOOO_XXX_SSS_DDD
+|  00010  |    subb      | OOOOO_XXX_SSS_DDD
+|  00011  |    subbi     | OOOOO_CCC_CCC_DDD  
+|  00100  |    jump      | OOOOO_X_AAAA_AAAA
+|  00101  |    mov       | OOOOO_XXX_SSS_DDD
+|  00110  |    ld        | OOOOO_CCC_CCC_DDD
+
+> S: Source Reg
+> D: Destiny Reg
+> C: Cte
+> X: nada
+> A: Address
