@@ -10,7 +10,7 @@ architecture a_ula_tb of ula_tb is
         port(
             in_a, in_b : in unsigned(15 downto 0);
             sel_op : in std_logic_vector(1 downto 0);
-            value_immediate : in unsigned(15 downto 0);
+            value_immediate : in unsigned(5 downto 0);
             borrow_in : in std_logic;
             carry_out : out std_logic;
             overflow : out std_logic;
@@ -21,7 +21,8 @@ architecture a_ula_tb of ula_tb is
     end component;
 
     -- Sinais internos
-    signal in_a, in_b, value_immediate : unsigned(15 downto 0);
+    signal in_a, in_b : unsigned(15 downto 0);
+	 signal value_immediate : unsigned(5 downto 0);
     signal sel_op : std_logic_vector(1 downto 0);
     signal borrow_in : std_logic;
     signal carry_out, overflow, zero, negative : std_logic;

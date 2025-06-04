@@ -6,7 +6,7 @@ entity ula is
     port(
         in_a, in_b : in unsigned(15 downto 0);
         sel_op : in std_logic_vector(1 downto 0);
-        value_immediate : in unsigned(15 downto 0);
+        value_immediate : in unsigned(5 downto 0);
         borrow_in : in std_logic;
         carry_out : out std_logic;
         overflow : out std_logic;
@@ -30,8 +30,11 @@ architecture a_ula of ula is
     signal signed_a_msb : std_logic;
     signal signed_second_msb : std_logic;
     signal signed_res_msb : std_logic;
+	 signal extended_immediate : unsigned(15 downto 0); 
 
 begin
+	 extended_immediate <= resize(value_immediate, 16);  -- Zero-extension
+
     -- Borrow signal for subtraction
     borrow_signal <= ("0000000000000001") when borrow_in = '1' else
                      ("0000000000000000");
@@ -39,14 +42,14 @@ begin
     -- Full adder and subtractor for 16-bit operations
     add_full  <= ('0' & in_a) + ('0' & in_b);
     subb_full <= ('0' & in_a) - ('0' & in_b) - ('0' & borrow_signal);
-    addi_full  <= ('0' & in_a) + ('0' & value_immediate);
-    subbi_full <= ('0' & in_a) - ('0' & value_immediate) - ('0' & borrow_signal);
+    addi_full  <= ('0' & in_a) + ('0' & extended_immediate);
+    subbi_full <= ('0' & in_a) - ('0' & extended_immediate) - ('0' & borrow_signal);
 
     -- Perform operations based on the selected operation
     add_result <= in_a + in_b;
     subb_result <= in_a - in_b - borrow_signal;
-    addi_result <= in_a + value_immediate;
-    subbi_result <= in_a - value_immediate - borrow_signal;
+    addi_result <= in_a + extended_immediate;
+    subbi_result <= in_a - extended_immediate - borrow_signal;
     result_signal <= add_result when sel_op = "00" else
                     subb_result when sel_op = "01" else
                     addi_result when sel_op = "10" else
@@ -57,7 +60,7 @@ begin
     -- Detecting the sign bit for overflow detection
     signed_a_msb <= in_a(15);
     signed_second_msb <= in_b(15) when (sel_op = "00" or sel_op = "01") else
-                        value_immediate(15) when (sel_op = "11" or sel_op ="10") else
+                        extended_immediate(15) when (sel_op = "11" or sel_op ="10") else
                         '0';
     signed_res_msb <= result_signal(15);
 

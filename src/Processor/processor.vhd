@@ -24,16 +24,16 @@ architecture a_processor of processor is
             rst : in std_logic;
             wr_en   : in std_logic;
             jump_en : in std_logic; 
-            jump_addr: in unsigned(6 downto 0); 
-            opcode : in unsigned(6 downto 0);
-            data_out: out unsigned(6 downto 0) 
+            jump_addr: in unsigned(7 downto 0); 
+            opcode : in unsigned(4 downto 0);
+            data_out: out unsigned(7 downto 0) -- TODO
         );
     end component;
 
     component rom is
         port(
             clk : in std_logic;
-            endereco : in unsigned(6 downto 0);
+            endereco : in unsigned(7 downto 0);
             dado : out unsigned(13 downto 0) 
         );
     end component;
@@ -43,26 +43,26 @@ architecture a_processor of processor is
             clk : in std_logic;
             instruction : in unsigned(13 downto 0);
             jump_en : out std_logic;
-            jump_addr : out unsigned(6 downto 0)
+            jump_addr : out unsigned(7 downto 0)
         );
     end component;
 
     -- opcode
-    signal opcode_s : unsigned(6 downto 0) := (others => '0');
+    signal opcode_s : unsigned(4 downto 0) := (others => '0');
 
     -- state machine
     signal estado_s : unsigned(1 downto 0) := (others => '0');
 
     -- pc
     signal pc_wr_en_s : std_logic := '0';
-    signal pc_data_out_s : unsigned(6 downto 0) := (others => '0');
+    signal pc_data_out_s : unsigned(7 downto 0) := (others => '0');
 
     -- rom
     signal rom_data_out_s : unsigned(13 downto 0) := (others => '0');
 
     -- control unit
     signal jump_en_s : std_logic := '0';
-    signal jump_addr_s : unsigned(6 downto 0) := (others => '0');
+    signal jump_addr_s : unsigned(7 downto 0) := (others => '0');
 
     begin
         sm: state_machine

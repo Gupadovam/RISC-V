@@ -12,9 +12,9 @@ architecture a_program_counter_manager of program_counter_manager_tb is
             rst : in std_logic;
             wr_en   : in std_logic;
             jump_en : in std_logic; 
-            jump_addr: in unsigned(6 downto 0); 
-            opcode : in unsigned(6 downto 0);
-            data_out: out unsigned(6 downto 0) 
+            jump_addr: in unsigned(7 downto 0); 
+            opcode : in unsigned(4 downto 0);
+            data_out: out unsigned(7 downto 0) 
         );
     end component;
 
@@ -24,9 +24,9 @@ architecture a_program_counter_manager of program_counter_manager_tb is
     signal rst : std_logic := '0';
     signal wr_en_s : std_logic := '0';
     signal jump_en_s : std_logic := '0';
-    signal jump_addr_s : unsigned(6 downto 0) := (others => '0');
-    signal opcode_s : unsigned(6 downto 0) := (others => '0');
-    signal data_out_s: unsigned(6 downto 0) := (others => '0');
+    signal jump_addr_s : unsigned(7 downto 0) := (others => '0');
+    signal opcode_s : unsigned(4 downto 0) := (others => '0');
+    signal data_out_s: unsigned(7 downto 0) := (others => '0');
 
 begin
     uut: program_counter_manager port map(
@@ -62,13 +62,13 @@ begin
         wait for 100 ns;
         wr_en_s <= '1';
         wait for 100 ns;
-        jump_addr_s <= "0000011";
+        jump_addr_s <= "00000011";
         jump_en_s <= '1';
         wait for 100 ns;
         jump_en_s <= '0';
         wait for 100 ns;
         wr_en_s <= '1';
-        jump_addr_s <= "0000010";
+        jump_addr_s <= "00000010";
         wait for 100 ns;
         wr_en_s <= '0';
         wait for 100 ns;

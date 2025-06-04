@@ -7,13 +7,13 @@ entity program_counter is
         clk : in std_logic;
         rst : in std_logic;
         wr_en : in std_logic;
-        data_in : in unsigned(6 downto 0);
-        data_out : out unsigned(6 downto 0)
+        data_in : in unsigned(7 downto 0);
+        data_out : out unsigned(7 downto 0)
     );
 end entity;
 
 architecture a_program_counter of program_counter is
-    signal data : unsigned(6 downto 0) := (others => '0');
+    signal data : unsigned(7 downto 0) := (others => '0');
     begin
         process(clk, rst, wr_en)
         begin
