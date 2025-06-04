@@ -6,7 +6,7 @@ entity ula is
     port(
         in_a, in_b : in unsigned(15 downto 0);
         sel_op : in std_logic_vector(1 downto 0);
-        value_immediate : in unsigned(5 downto 0);
+        value_immediate : in unsigned(8 downto 0);
         borrow_in : in std_logic;
         carry_out : out std_logic;
         overflow : out std_logic;

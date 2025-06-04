@@ -19,12 +19,17 @@ The script will typically:
 | Opcode |     Função    | Instrução 
 |--------|---------------| --------- |
 |  00000  |    nop       | OOOOO_X_XXXX_XXXX
-|  00001  |    add       | OOOOO_XXX_SSS_DDD
-|  00010  |    subb      | OOOOO_XXX_SSS_DDD
-|  00011  |    subbi     | OOOOO_CCC_CCC_DDD  
+|  00001  |    add       | OOOOO_XXX_XXX_SSS
+|  00010  |    subb      | OOOOO_XXX_XXX_SSS
+|  00011  |    subbi     | OOOOO_CCC_CCC_CCC  
 |  00100  |    jump      | OOOOO_X_AAAA_AAAA
 |  00101  |    mov       | OOOOO_XXX_SSS_DDD
-|  00110  |    ldi        | OOOOO_CCC_CCC_DDD
+|  00110  |    ldi       | OOOOO_CCC_CCC_CCC
+|  00111  |    load      | OOOOO_XXX_XXX_SSS
+|  01000  |    store     | OOOOO_XXX_XXX_DDD
+
+
+
 
 > S: Source Reg
 > D: Destiny Reg
