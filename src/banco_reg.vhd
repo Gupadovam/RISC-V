@@ -15,7 +15,7 @@ entity banco_reg is
 end entity;
 
 architecture a_banco_reg of banco_reg is
-    component reg16 is
+    component reg_16 is
         port (
             clk      : in std_logic;
             rst      : in std_logic;
@@ -40,7 +40,7 @@ begin
 
     -- Instanciação dos registradores
     gen_regs: for i in 0 to 4 generate
-        reg_inst: reg16
+        reg_inst: reg_16
             port map (
                 clk      => clk,
                 rst      => rst,

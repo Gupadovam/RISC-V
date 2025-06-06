@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity reg16 is
+entity reg_16 is
     port(
         clk      : in std_logic;
         rst      : in std_logic;
@@ -12,7 +12,7 @@ entity reg16 is
     );
 end entity;
 
-architecture a_reg16 of reg16 is
+architecture a_reg16 of reg_16 is
     signal reg_value : unsigned(15 downto 0) := (others => '0');
 
     begin

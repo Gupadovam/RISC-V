@@ -41,18 +41,19 @@ architecture a_processor of processor is
 
     component control_unit is
         port(
-            clk : in std_logic;
-            instruction : in unsigned(13 downto 0);
-            jump_en : out std_logic;
-            jump_addr : out unsigned(7 downto 0);
-            reg_wr_en : out std_logic;
-            acc_en : out std_logic;
-            sel_op_ula : out std_logic_vector(1 downto 0);
-            sel_ula_src : out std_logic;
-            sel_acc_src : out std_logic;
-            source_reg : out unsigned(2 downto 0);
-            destiny_reg : out unsigned(2 downto 0);
-            immediate : out unsigned(8 downto 0)
+				clk : in std_logic;
+				instruction : in unsigned(13 downto 0);
+				reg_wr_en : out std_logic;
+				sel_op_ula : out std_logic_vector(1 downto 0);
+				source_reg : out unsigned(2 downto 0);
+				destiny_reg : out unsigned(2 downto 0);
+				jump_en : out std_logic;
+				jump_addr : out unsigned(7 downto 0);
+				acc_en : out std_logic;
+				immediate : out unsigned(8 downto 0);
+				sel_ula_src : out std_logic;
+				sel_acc_src : out std_logic;
+				borrow_in : out std_logic
         );
     end component;
 
@@ -80,21 +81,34 @@ architecture a_processor of processor is
         );
     end component;
 
-    component register_file is
-        port(
-            clk : in std_logic;
-            rst : in std_logic;
-            wr_en : in std_logic;
-            wr_addr : in unsigned(2 downto 0);
-            rd_addr : in unsigned(2 downto 0);
-            data_in : in unsigned(15 downto 0);
-            data_out : out unsigned(15 downto 0)
-        );
-    end component;
+	 component banco_reg is
+		  port (
+				clk      : in std_logic;
+				rst      : in std_logic;
+				wr_en    : in std_logic;                  
+				wr_sel   : in unsigned(2 downto 0); -- selec. reg escrito
+				rd_sel   : in unsigned(2 downto 0); -- selec. reg lido
+				data_in  : in unsigned(15 downto 0); 
+				data_out : out unsigned(15 downto 0)     
+		  );
+	 end component;
+
+    -- component register_file is
+    --     port(
+    --         clk : in std_logic;
+    --         rst : in std_logic;
+    --         wr_en : in std_logic;
+    --         wr_addr : in unsigned(2 downto 0);
+    --         rd_addr : in unsigned(2 downto 0);
+    --         data_in : in unsigned(15 downto 0);
+    --         data_out : out unsigned(15 downto 0)
+    --     );
+    -- end component;
 
     -- Sinais
     signal estado_s : unsigned(1 downto 0);
     signal pc_data_out_s : unsigned(7 downto 0);
+	 signal pc_wr_en_s : std_logic := '0';
     signal rom_data_out_s : unsigned(13 downto 0);
     signal opcode_s : unsigned(4 downto 0);
     signal jump_en_s : std_logic;
@@ -114,13 +128,23 @@ architecture a_processor of processor is
 begin
     -- Componentes principais
     sm: state_machine
-        port map(clk => clk, rst => rst, estado => estado_s);
+        port map(clk => clk,
+					  rst => rst,
+					  estado => estado_s);
 
     pc: program_counter_manager
-        port map(clk => clk, rst => rst, wr_en => '1' when estado_s = "00" else '0', jump_en => jump_en_s, jump_addr => jump_addr_s, opcode => opcode_s, data_out => pc_data_out_s);
+        port map(clk => clk,
+					  rst => rst,
+					  wr_en => pc_wr_en_s,
+					  jump_en => jump_en_s,
+					  jump_addr => jump_addr_s,
+					  opcode => opcode_s,
+					  data_out => pc_data_out_s);
 
     rom1: rom
-        port map(clk => clk, endereco => pc_data_out_s, dado => rom_data_out_s);
+        port map(clk => clk, 
+					  endereco => pc_data_out_s,
+					  dado => rom_data_out_s);
 
     cu: control_unit
         port map(
@@ -135,20 +159,31 @@ begin
             sel_acc_src => sel_acc_src_s,
             source_reg => source_reg_s,
             destiny_reg => destiny_reg_s,
-            immediate => immediate_s
-            borrow_in => borrow_in_s,
+            immediate => immediate_s,
+            borrow_in => borrow_in_s
         );
 
-    rf: register_file
-        port map(
-            clk => clk,
-            rst => rst,
-            wr_en => reg_wr_en_s,
-            wr_addr => destiny_reg_s,
-            rd_addr => source_reg_s,
-            data_in => acc_data_out_s,
-            data_out => reg_data_out_s
-        );
+	 br: banco_reg
+		  port map(
+				clk => clk,
+				rst => rst,  
+				wr_en => reg_wr_en_s,
+				wr_sel => destiny_reg_s,
+				rd_sel => source_reg_s,
+				data_in => acc_data_out_s,
+				data_out => reg_data_out_s
+		  );
+
+    -- rf: register_file
+    --     port map(
+    --         clk => clk,
+    --         rst => rst,
+    --         wr_en => reg_wr_en_s,
+    --         wr_addr => destiny_reg_s,
+    --         rd_addr => source_reg_s,
+    --         data_in => acc_data_out_s,
+    --         data_out => reg_data_out_s
+    --     );
 
     -- MUX de entrada da ULA
     ula_in_b_s <= reg_data_out_s when sel_ula_src_s = '0' else resize(immediate_s, 16);
@@ -168,7 +203,9 @@ begin
         );
 
     -- MUX de entrada do ACC
-    acc_input_s <= ula_result_s when sel_acc_src_s = '0' else reg_data_out_s;
+		  acc_input_s <= ("0000000"&immediate_s) when opcode_s = "00110"
+							  else reg_data_out_s when sel_acc_src_s = '1'
+							  else ula_result_s when opcode_s = "";
 
     acc: acumulador
         port map(
@@ -181,5 +218,10 @@ begin
 
     -- Opcode extraido para o PC
     opcode_s <= rom_data_out_s(13 downto 9);
+
+	 -- estado 0 (fetch)
+	 pc_wr_en_s <= '1' when estado_s = "00" else '0';
+
+	 -- estado 1 (decode/execute)
 
 end architecture;

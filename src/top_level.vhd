@@ -31,7 +31,7 @@ end entity;
 architecture a_top_level of top_level is
 
     -- Componentes
-    component reg16 is
+    component reg_16 is
         port (
             clk      : in std_logic;
             rst      : in std_logic;
@@ -90,7 +90,7 @@ begin
             data_out => reg_data
         );
 
-    acum: reg16
+    acum: reg_16
         port map (
             clk      => clk,
             rst      => rst,
