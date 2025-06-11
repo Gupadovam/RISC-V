@@ -27,7 +27,13 @@ The script will typically:
 |  00110  |    ldi       | OOOOO_CCC_CCC_CCC
 |  00111  |    load      | OOOOO_XXX_XXX_SSS
 |  01000  |    store     | OOOOO_XXX_XXX_DDD
-
+|01001 	|bls 	|OOOOO_XXX_AAAA_AAAA
+|01010 	|bcs 	|OOOOO_XXX_AAAA_AAAA
+|01011 	|beq 	|OOOOO_XXX_AAAA_AAAA
+|01100 	|bne 	|OOOOO_XXX_AAAA_AAAA
+|01101 	|bgt 	|OOOOO_XXX_AAAA_AAAA
+|01110 	|blt 	|OOOOO_XXX_AAAA_AAAA
+|01111 	|cmpr 	|OOOOO_XXX_XXXX_SSSS
 
 
 
