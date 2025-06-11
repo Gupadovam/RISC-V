@@ -52,7 +52,7 @@ begin
     subbi_result <= in_a - extended_immediate - borrow_signal;
     result_signal <= add_result when sel_op = "00" else
                     subb_result when sel_op = "01" else
-                    result_signal when sel_op = "10" else
+                    result_signal when sel_op = "10" else -- NOP
                     subbi_result when sel_op = "11" else
                     (others => '0');
 

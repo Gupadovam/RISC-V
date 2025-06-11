@@ -1,15 +1,15 @@
 [*]
-[*] GTKWave Analyzer v3.3.122 (w)1999-2024 BSI
-[*] Fri Jun  6 19:30:58 2025
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Wed Jun 11 05:21:41 2025
 [*]
-[dumpfile] "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/build/processor_tb.ghw"
-[dumpfile_mtime] "Fri Jun  6 19:26:07 2025"
-[dumpfile_size] 48677
-[savefile] "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/processor_tb_wave_config.gtkw"
-[timestart] 2393000000
+[dumpfile] "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\build\processor_tb.ghw"
+[dumpfile_mtime] "Wed Jun 11 05:21:30 2025"
+[dumpfile_size] 33078
+[savefile] "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\processor_tb_wave_config.gtkw"
+[timestart] 0
 [size] 1536 785
-[pos] -27 -24
-*-27.655592 3250000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-28.192181 147000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.processor_tb.
 [treeopen] top.processor_tb.uut.
@@ -17,24 +17,18 @@
 [treeopen] top.processor_tb.uut.br.
 [treeopen] top.processor_tb.uut.br.gen_regs[0].
 [treeopen] top.processor_tb.uut.br.regs_out.
+[treeopen] top.processor_tb.uut.cu.
 [treeopen] top.processor_tb.uut.rom1.
 [treeopen] top.processor_tb.uut.ula1.
 [sst_width] 273
 [signals_width] 190
 [sst_expanded] 1
-[sst_vpaned_height] 219
+[sst_vpaned_height] 402
 @28
 top.processor_tb.clk
 top.processor_tb.rst
-@22
-#{top.processor_tb.uut.ula1.in_a[15:0]} top.processor_tb.uut.ula1.in_a[15] top.processor_tb.uut.ula1.in_a[14] top.processor_tb.uut.ula1.in_a[13] top.processor_tb.uut.ula1.in_a[12] top.processor_tb.uut.ula1.in_a[11] top.processor_tb.uut.ula1.in_a[10] top.processor_tb.uut.ula1.in_a[9] top.processor_tb.uut.ula1.in_a[8] top.processor_tb.uut.ula1.in_a[7] top.processor_tb.uut.ula1.in_a[6] top.processor_tb.uut.ula1.in_a[5] top.processor_tb.uut.ula1.in_a[4] top.processor_tb.uut.ula1.in_a[3] top.processor_tb.uut.ula1.in_a[2] top.processor_tb.uut.ula1.in_a[1] top.processor_tb.uut.ula1.in_a[0]
-#{top.processor_tb.uut.ula1.in_b[15:0]} top.processor_tb.uut.ula1.in_b[15] top.processor_tb.uut.ula1.in_b[14] top.processor_tb.uut.ula1.in_b[13] top.processor_tb.uut.ula1.in_b[12] top.processor_tb.uut.ula1.in_b[11] top.processor_tb.uut.ula1.in_b[10] top.processor_tb.uut.ula1.in_b[9] top.processor_tb.uut.ula1.in_b[8] top.processor_tb.uut.ula1.in_b[7] top.processor_tb.uut.ula1.in_b[6] top.processor_tb.uut.ula1.in_b[5] top.processor_tb.uut.ula1.in_b[4] top.processor_tb.uut.ula1.in_b[3] top.processor_tb.uut.ula1.in_b[2] top.processor_tb.uut.ula1.in_b[1] top.processor_tb.uut.ula1.in_b[0]
-@28
 #{top.processor_tb.uut.ula1.sel_op[1:0]} top.processor_tb.uut.ula1.sel_op[1] top.processor_tb.uut.ula1.sel_op[0]
-#{top.processor_tb.uut.br.rd_sel[2:0]} top.processor_tb.uut.br.rd_sel[2] top.processor_tb.uut.br.rd_sel[1] top.processor_tb.uut.br.rd_sel[0]
-#{top.processor_tb.uut.br.wr_sel[2:0]} top.processor_tb.uut.br.wr_sel[2] top.processor_tb.uut.br.wr_sel[1] top.processor_tb.uut.br.wr_sel[0]
 @22
-#{top.processor_tb.uut.ula1.result[15:0]} top.processor_tb.uut.ula1.result[15] top.processor_tb.uut.ula1.result[14] top.processor_tb.uut.ula1.result[13] top.processor_tb.uut.ula1.result[12] top.processor_tb.uut.ula1.result[11] top.processor_tb.uut.ula1.result[10] top.processor_tb.uut.ula1.result[9] top.processor_tb.uut.ula1.result[8] top.processor_tb.uut.ula1.result[7] top.processor_tb.uut.ula1.result[6] top.processor_tb.uut.ula1.result[5] top.processor_tb.uut.ula1.result[4] top.processor_tb.uut.ula1.result[3] top.processor_tb.uut.ula1.result[2] top.processor_tb.uut.ula1.result[1] top.processor_tb.uut.ula1.result[0]
 #{top.processor_tb.uut.br.regs_out[0][15:0]} top.processor_tb.uut.br.regs_out[0][15] top.processor_tb.uut.br.regs_out[0][14] top.processor_tb.uut.br.regs_out[0][13] top.processor_tb.uut.br.regs_out[0][12] top.processor_tb.uut.br.regs_out[0][11] top.processor_tb.uut.br.regs_out[0][10] top.processor_tb.uut.br.regs_out[0][9] top.processor_tb.uut.br.regs_out[0][8] top.processor_tb.uut.br.regs_out[0][7] top.processor_tb.uut.br.regs_out[0][6] top.processor_tb.uut.br.regs_out[0][5] top.processor_tb.uut.br.regs_out[0][4] top.processor_tb.uut.br.regs_out[0][3] top.processor_tb.uut.br.regs_out[0][2] top.processor_tb.uut.br.regs_out[0][1] top.processor_tb.uut.br.regs_out[0][0]
 #{top.processor_tb.uut.br.regs_out[1][15:0]} top.processor_tb.uut.br.regs_out[1][15] top.processor_tb.uut.br.regs_out[1][14] top.processor_tb.uut.br.regs_out[1][13] top.processor_tb.uut.br.regs_out[1][12] top.processor_tb.uut.br.regs_out[1][11] top.processor_tb.uut.br.regs_out[1][10] top.processor_tb.uut.br.regs_out[1][9] top.processor_tb.uut.br.regs_out[1][8] top.processor_tb.uut.br.regs_out[1][7] top.processor_tb.uut.br.regs_out[1][6] top.processor_tb.uut.br.regs_out[1][5] top.processor_tb.uut.br.regs_out[1][4] top.processor_tb.uut.br.regs_out[1][3] top.processor_tb.uut.br.regs_out[1][2] top.processor_tb.uut.br.regs_out[1][1] top.processor_tb.uut.br.regs_out[1][0]
 #{top.processor_tb.uut.br.regs_out[2][15:0]} top.processor_tb.uut.br.regs_out[2][15] top.processor_tb.uut.br.regs_out[2][14] top.processor_tb.uut.br.regs_out[2][13] top.processor_tb.uut.br.regs_out[2][12] top.processor_tb.uut.br.regs_out[2][11] top.processor_tb.uut.br.regs_out[2][10] top.processor_tb.uut.br.regs_out[2][9] top.processor_tb.uut.br.regs_out[2][8] top.processor_tb.uut.br.regs_out[2][7] top.processor_tb.uut.br.regs_out[2][6] top.processor_tb.uut.br.regs_out[2][5] top.processor_tb.uut.br.regs_out[2][4] top.processor_tb.uut.br.regs_out[2][3] top.processor_tb.uut.br.regs_out[2][2] top.processor_tb.uut.br.regs_out[2][1] top.processor_tb.uut.br.regs_out[2][0]
@@ -60,16 +54,24 @@ top.processor_tb.uut.br.regs_out[4][1]
 top.processor_tb.uut.br.regs_out[4][0]
 @1401200
 -group_end
-@23
-#{top.processor_tb.uut.ula1.in_a[15:0]} top.processor_tb.uut.ula1.in_a[15] top.processor_tb.uut.ula1.in_a[14] top.processor_tb.uut.ula1.in_a[13] top.processor_tb.uut.ula1.in_a[12] top.processor_tb.uut.ula1.in_a[11] top.processor_tb.uut.ula1.in_a[10] top.processor_tb.uut.ula1.in_a[9] top.processor_tb.uut.ula1.in_a[8] top.processor_tb.uut.ula1.in_a[7] top.processor_tb.uut.ula1.in_a[6] top.processor_tb.uut.ula1.in_a[5] top.processor_tb.uut.ula1.in_a[4] top.processor_tb.uut.ula1.in_a[3] top.processor_tb.uut.ula1.in_a[2] top.processor_tb.uut.ula1.in_a[1] top.processor_tb.uut.ula1.in_a[0]
+@28
+#{top.processor_tb.uut.estado_s[1:0]} top.processor_tb.uut.estado_s[1] top.processor_tb.uut.estado_s[0]
+@22
+#{top.processor_tb.uut.rom1.endereco[7:0]} top.processor_tb.uut.rom1.endereco[7] top.processor_tb.uut.rom1.endereco[6] top.processor_tb.uut.rom1.endereco[5] top.processor_tb.uut.rom1.endereco[4] top.processor_tb.uut.rom1.endereco[3] top.processor_tb.uut.rom1.endereco[2] top.processor_tb.uut.rom1.endereco[1] top.processor_tb.uut.rom1.endereco[0]
 @28
 #{top.processor_tb.uut.opcode_s[4:0]} top.processor_tb.uut.opcode_s[4] top.processor_tb.uut.opcode_s[3] top.processor_tb.uut.opcode_s[2] top.processor_tb.uut.opcode_s[1] top.processor_tb.uut.opcode_s[0]
 @22
 #{top.processor_tb.uut.ula1.value_immediate[8:0]} top.processor_tb.uut.ula1.value_immediate[8] top.processor_tb.uut.ula1.value_immediate[7] top.processor_tb.uut.ula1.value_immediate[6] top.processor_tb.uut.ula1.value_immediate[5] top.processor_tb.uut.ula1.value_immediate[4] top.processor_tb.uut.ula1.value_immediate[3] top.processor_tb.uut.ula1.value_immediate[2] top.processor_tb.uut.ula1.value_immediate[1] top.processor_tb.uut.ula1.value_immediate[0]
-#{top.processor_tb.uut.acc.data_out[15:0]} top.processor_tb.uut.acc.data_out[15] top.processor_tb.uut.acc.data_out[14] top.processor_tb.uut.acc.data_out[13] top.processor_tb.uut.acc.data_out[12] top.processor_tb.uut.acc.data_out[11] top.processor_tb.uut.acc.data_out[10] top.processor_tb.uut.acc.data_out[9] top.processor_tb.uut.acc.data_out[8] top.processor_tb.uut.acc.data_out[7] top.processor_tb.uut.acc.data_out[6] top.processor_tb.uut.acc.data_out[5] top.processor_tb.uut.acc.data_out[4] top.processor_tb.uut.acc.data_out[3] top.processor_tb.uut.acc.data_out[2] top.processor_tb.uut.acc.data_out[1] top.processor_tb.uut.acc.data_out[0]
+#{top.processor_tb.uut.ula1.in_a[15:0]} top.processor_tb.uut.ula1.in_a[15] top.processor_tb.uut.ula1.in_a[14] top.processor_tb.uut.ula1.in_a[13] top.processor_tb.uut.ula1.in_a[12] top.processor_tb.uut.ula1.in_a[11] top.processor_tb.uut.ula1.in_a[10] top.processor_tb.uut.ula1.in_a[9] top.processor_tb.uut.ula1.in_a[8] top.processor_tb.uut.ula1.in_a[7] top.processor_tb.uut.ula1.in_a[6] top.processor_tb.uut.ula1.in_a[5] top.processor_tb.uut.ula1.in_a[4] top.processor_tb.uut.ula1.in_a[3] top.processor_tb.uut.ula1.in_a[2] top.processor_tb.uut.ula1.in_a[1] top.processor_tb.uut.ula1.in_a[0]
+#{top.processor_tb.uut.ula1.in_b[15:0]} top.processor_tb.uut.ula1.in_b[15] top.processor_tb.uut.ula1.in_b[14] top.processor_tb.uut.ula1.in_b[13] top.processor_tb.uut.ula1.in_b[12] top.processor_tb.uut.ula1.in_b[11] top.processor_tb.uut.ula1.in_b[10] top.processor_tb.uut.ula1.in_b[9] top.processor_tb.uut.ula1.in_b[8] top.processor_tb.uut.ula1.in_b[7] top.processor_tb.uut.ula1.in_b[6] top.processor_tb.uut.ula1.in_b[5] top.processor_tb.uut.ula1.in_b[4] top.processor_tb.uut.ula1.in_b[3] top.processor_tb.uut.ula1.in_b[2] top.processor_tb.uut.ula1.in_b[1] top.processor_tb.uut.ula1.in_b[0]
+#{top.processor_tb.uut.ula_in_b_s[15:0]} top.processor_tb.uut.ula_in_b_s[15] top.processor_tb.uut.ula_in_b_s[14] top.processor_tb.uut.ula_in_b_s[13] top.processor_tb.uut.ula_in_b_s[12] top.processor_tb.uut.ula_in_b_s[11] top.processor_tb.uut.ula_in_b_s[10] top.processor_tb.uut.ula_in_b_s[9] top.processor_tb.uut.ula_in_b_s[8] top.processor_tb.uut.ula_in_b_s[7] top.processor_tb.uut.ula_in_b_s[6] top.processor_tb.uut.ula_in_b_s[5] top.processor_tb.uut.ula_in_b_s[4] top.processor_tb.uut.ula_in_b_s[3] top.processor_tb.uut.ula_in_b_s[2] top.processor_tb.uut.ula_in_b_s[1] top.processor_tb.uut.ula_in_b_s[0]
 @28
 top.processor_tb.uut.acc.wr_en
 @22
-#{top.processor_tb.uut.rom1.endereco[7:0]} top.processor_tb.uut.rom1.endereco[7] top.processor_tb.uut.rom1.endereco[6] top.processor_tb.uut.rom1.endereco[5] top.processor_tb.uut.rom1.endereco[4] top.processor_tb.uut.rom1.endereco[3] top.processor_tb.uut.rom1.endereco[2] top.processor_tb.uut.rom1.endereco[1] top.processor_tb.uut.rom1.endereco[0]
+#{top.processor_tb.uut.acc.data_in[15:0]} top.processor_tb.uut.acc.data_in[15] top.processor_tb.uut.acc.data_in[14] top.processor_tb.uut.acc.data_in[13] top.processor_tb.uut.acc.data_in[12] top.processor_tb.uut.acc.data_in[11] top.processor_tb.uut.acc.data_in[10] top.processor_tb.uut.acc.data_in[9] top.processor_tb.uut.acc.data_in[8] top.processor_tb.uut.acc.data_in[7] top.processor_tb.uut.acc.data_in[6] top.processor_tb.uut.acc.data_in[5] top.processor_tb.uut.acc.data_in[4] top.processor_tb.uut.acc.data_in[3] top.processor_tb.uut.acc.data_in[2] top.processor_tb.uut.acc.data_in[1] top.processor_tb.uut.acc.data_in[0]
+#{top.processor_tb.uut.acc.data_out[15:0]} top.processor_tb.uut.acc.data_out[15] top.processor_tb.uut.acc.data_out[14] top.processor_tb.uut.acc.data_out[13] top.processor_tb.uut.acc.data_out[12] top.processor_tb.uut.acc.data_out[11] top.processor_tb.uut.acc.data_out[10] top.processor_tb.uut.acc.data_out[9] top.processor_tb.uut.acc.data_out[8] top.processor_tb.uut.acc.data_out[7] top.processor_tb.uut.acc.data_out[6] top.processor_tb.uut.acc.data_out[5] top.processor_tb.uut.acc.data_out[4] top.processor_tb.uut.acc.data_out[3] top.processor_tb.uut.acc.data_out[2] top.processor_tb.uut.acc.data_out[1] top.processor_tb.uut.acc.data_out[0]
+@28
+#{top.processor_tb.uut.opcode_s[4:0]} top.processor_tb.uut.opcode_s[4] top.processor_tb.uut.opcode_s[3] top.processor_tb.uut.opcode_s[2] top.processor_tb.uut.opcode_s[1] top.processor_tb.uut.opcode_s[0]
+#{top.processor_tb.uut.cu.destiny_reg[2:0]} top.processor_tb.uut.cu.destiny_reg[2] top.processor_tb.uut.cu.destiny_reg[1] top.processor_tb.uut.cu.destiny_reg[0]
 [pattern_trace] 1
 [pattern_trace] 0

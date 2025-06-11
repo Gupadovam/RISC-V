@@ -1,37 +1,37 @@
 v 4
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "processor.vhd" "8aee729952df7615f315a8027e05a20ed97da650" "20250606192606.111":
-  entity processor at 1( 0) + 0 on 839;
-  architecture a_processor of processor at 12( 175) + 0 on 840;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "processor_tb.vhd" "bd768d19d57e5f25626977f626897a7bb3505d32" "20250606192606.180":
-  entity processor_tb at 1( 0) + 0 on 841;
-  architecture a_processor_tb of processor_tb at 8( 106) + 0 on 842;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../reg_16.vhd" "216d209e3bb458ea4999e3214f6ae31e59433611" "20250606192606.078":
-  entity reg_16 at 1( 0) + 0 on 837;
-  architecture a_reg16 of reg_16 at 15( 320) + 0 on 838;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../ULA/acumulador.vhd" "f44886d7cb5b456d9606d491dff1b09dc25972c2" "20250606192605.997":
-  entity acumulador at 1( 0) + 0 on 833;
-  architecture a_acumulador of acumulador at 15( 325) + 0 on 834;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../ROM/rom.vhd" "942e9864052e497a67618b7adde44e8cbff41713" "20250606192605.790":
-  entity rom at 1( 0) + 0 on 827;
-  architecture a_rom of rom at 13( 220) + 0 on 828;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../ProgramCounter/program_counter.vhd" "0088c2e1f240dd82ed2d543615dfc592f52c0f36" "20250606192605.705":
-  entity program_counter at 1( 0) + 0 on 823;
-  architecture a_program_counter of program_counter at 15( 299) + 0 on 824;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../StateMachine/state_machine.vhd" "dc78d51d3cbf6430518562014bc2c02a7d8e9a79" "20250606192605.667":
-  entity state_machine at 4( 37) + 0 on 821;
-  architecture a_state_machine of state_machine at 16( 259) + 0 on 822;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../ProgramCounter/program_counter_manager.vhd" "9eadb27a2eeff25007399aecc4a965ffc2dc11b9" "20250606192605.745":
-  entity program_counter_manager at 1( 0) + 0 on 825;
-  architecture a_program_counter_manager of program_counter_manager at 17( 387) + 0 on 826;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../ULA/ula.vhd" "0458ed39b719168b0d29e72f0d1fdb261bd79a13" "20250606192605.897":
-  entity ula at 1( 0) + 0 on 831;
-  architecture a_ula of ula at 19( 487) + 0 on 832;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../banco_reg.vhd" "72034de15f79bc7f589f4a8c3b91f315ffea1bb3" "20250606192606.031":
-  entity banco_reg at 1( 0) + 0 on 835;
-  architecture a_banco_reg of banco_reg at 17( 479) + 0 on 836;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../top_level.vhd" "d5eae3a5f7fc23d17a26e5b9c87935072a1dcefe" "20250606182442.412":
-  entity top_level at 1( 0) + 0 on 519;
-  architecture a_top_level of top_level at 31( 1040) + 0 on 520;
-file "/home/gaspad/prog/ArqComp/RISC-V/src/Processor/" "../ControlUnit/control_unit.vhd" "7a9e7a45f910f11ebbfe87110c14a6dfca1c1fc8" "20250606192605.831":
-  entity control_unit at 1( 0) + 0 on 829;
-  architecture a_control_unit of control_unit at 23( 597) + 0 on 830;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "processor_tb.vhd" "8618db1a28d6344bd673b6bc2b77fa69cb0ac61c" "20250611053325.226":
+  entity processor_tb at 1( 0) + 0 on 33;
+  architecture a_processor_tb of processor_tb at 8( 113) + 0 on 34;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../InstructionRegister/instruction_register.vhd" "fd7c8909827c4ed8f3b4c5416b0dc107494a364d" "20250611053325.134":
+  entity instruction_register at 1( 0) + 0 on 29;
+  architecture a_instruction_register of instruction_register at 15( 334) + 0 on 30;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../banco_reg.vhd" "72034de15f79bc7f589f4a8c3b91f315ffea1bb3" "20250611053325.046":
+  entity banco_reg at 1( 0) + 0 on 25;
+  architecture a_banco_reg of banco_reg at 17( 479) + 0 on 26;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ULA/ula.vhd" "a29fad1b589c77fab1f1741d1d40c54524eae043" "20250611053324.960":
+  entity ula at 1( 0) + 0 on 21;
+  architecture a_ula of ula at 19( 487) + 0 on 22;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ROM/rom.vhd" "f57ffa083deb25b2f5b5f4826242cc9e7a21810a" "20250611053324.876":
+  entity rom at 1( 0) + 0 on 17;
+  architecture a_rom of rom at 13( 232) + 0 on 18;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ProgramCounter/program_counter.vhd" "17d3516485b3c74c136b791bbc8038e35052e5f4" "20250611053324.795":
+  entity program_counter at 1( 0) + 0 on 13;
+  architecture a_program_counter of program_counter at 15( 313) + 0 on 14;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../StateMachine/state_machine.vhd" "38659119306cd20d6824db0920f9ebb8ac93b315" "20250611053324.753":
+  entity state_machine at 4( 40) + 0 on 11;
+  architecture a_state_machine of state_machine at 16( 274) + 0 on 12;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ProgramCounter/program_counter_manager.vhd" "b0b066d4680dfca0963774898a2f3a5a87421039" "20250611053324.836":
+  entity program_counter_manager at 1( 0) + 0 on 15;
+  architecture a_program_counter_manager of program_counter_manager at 17( 403) + 0 on 16;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ControlUnit/control_unit.vhd" "2304f4864e8cca7fc30291e9604157c8bf723cff" "20250611053324.917":
+  entity control_unit at 1( 0) + 0 on 19;
+  architecture a_control_unit of control_unit at 25( 710) + 0 on 20;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ULA/acumulador.vhd" "f44886d7cb5b456d9606d491dff1b09dc25972c2" "20250611053325.003":
+  entity acumulador at 1( 0) + 0 on 23;
+  architecture a_acumulador of acumulador at 15( 325) + 0 on 24;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../reg_16.vhd" "216d209e3bb458ea4999e3214f6ae31e59433611" "20250611053325.086":
+  entity reg_16 at 1( 0) + 0 on 27;
+  architecture a_reg16 of reg_16 at 15( 320) + 0 on 28;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "processor.vhd" "37cb19a9b421474beae82fe3b59c8b88be10de7f" "20250611053325.182":
+  entity processor at 1( 0) + 0 on 31;
+  architecture a_processor of processor at 12( 186) + 0 on 32;
