@@ -1,37 +1,40 @@
 v 4
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "processor_tb.vhd" "8618db1a28d6344bd673b6bc2b77fa69cb0ac61c" "20250611053325.226":
-  entity processor_tb at 1( 0) + 0 on 33;
-  architecture a_processor_tb of processor_tb at 8( 113) + 0 on 34;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../InstructionRegister/instruction_register.vhd" "fd7c8909827c4ed8f3b4c5416b0dc107494a364d" "20250611053325.134":
-  entity instruction_register at 1( 0) + 0 on 29;
-  architecture a_instruction_register of instruction_register at 15( 334) + 0 on 30;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../banco_reg.vhd" "72034de15f79bc7f589f4a8c3b91f315ffea1bb3" "20250611053325.046":
-  entity banco_reg at 1( 0) + 0 on 25;
-  architecture a_banco_reg of banco_reg at 17( 479) + 0 on 26;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ULA/ula.vhd" "a29fad1b589c77fab1f1741d1d40c54524eae043" "20250611053324.960":
-  entity ula at 1( 0) + 0 on 21;
-  architecture a_ula of ula at 19( 487) + 0 on 22;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ROM/rom.vhd" "f57ffa083deb25b2f5b5f4826242cc9e7a21810a" "20250611053324.876":
-  entity rom at 1( 0) + 0 on 17;
-  architecture a_rom of rom at 13( 232) + 0 on 18;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ProgramCounter/program_counter.vhd" "17d3516485b3c74c136b791bbc8038e35052e5f4" "20250611053324.795":
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "processor_tb.vhd" "8618db1a28d6344bd673b6bc2b77fa69cb0ac61c" "20250619044618.133":
+  entity processor_tb at 1( 0) + 0 on 35;
+  architecture a_processor_tb of processor_tb at 8( 113) + 0 on 36;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../MemoryManagementUnit/mmu.vhd" "037f8caf9574e9fb5ad2e3ab0b73dd2befdc5ccb" "20250619044618.042":
+  entity mmu at 1( 0) + 0 on 31;
+  architecture a_mmu of mmu at 15( 327) + 0 on 32;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../RegisterBank/Register16Bits.vhd" "067e800c6253b6421b9a140e1b56c51b0493a2ea" "20250619044617.945":
+  entity register16bits at 1( 0) + 0 on 27;
+  architecture a_reg16 of register16bits at 15( 328) + 0 on 28;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ULA/ula.vhd" "803b425c212189cf244b9ed75a131b6dc974d516" "20250619044617.853":
+  entity ula at 1( 0) + 0 on 23;
+  architecture a_ula of ula at 19( 487) + 0 on 24;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../RAM/ram.vhd" "3f8f4de567e5939ce66b900213c9f140b45c2e5b" "20250619044617.733":
+  entity ram at 1( 0) + 0 on 19;
+  architecture a_ram of ram at 15( 329) + 0 on 20;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ProgramCounter/program_counter_manager.vhd" "ecee9a449b1abf35cabe4e39ae2b790e65a6cfe9" "20250619044617.635":
+  entity program_counter_manager at 1( 0) + 0 on 15;
+  architecture a_program_counter_manager of program_counter_manager at 22( 654) + 0 on 16;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../StateMachine/state_machine.vhd" "9a9a83776735378664834288ecb4b2af456bee03" "20250619044617.529":
+  entity state_machine at 1( 0) + 0 on 11;
+  architecture a_statemachine of state_machine at 18( 316) + 0 on 12;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ProgramCounter/program_counter.vhd" "17d3516485b3c74c136b791bbc8038e35052e5f4" "20250619044617.588":
   entity program_counter at 1( 0) + 0 on 13;
   architecture a_program_counter of program_counter at 15( 313) + 0 on 14;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../StateMachine/state_machine.vhd" "38659119306cd20d6824db0920f9ebb8ac93b315" "20250611053324.753":
-  entity state_machine at 4( 40) + 0 on 11;
-  architecture a_state_machine of state_machine at 16( 274) + 0 on 12;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ProgramCounter/program_counter_manager.vhd" "b0b066d4680dfca0963774898a2f3a5a87421039" "20250611053324.836":
-  entity program_counter_manager at 1( 0) + 0 on 15;
-  architecture a_program_counter_manager of program_counter_manager at 17( 403) + 0 on 16;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ControlUnit/control_unit.vhd" "2304f4864e8cca7fc30291e9604157c8bf723cff" "20250611053324.917":
-  entity control_unit at 1( 0) + 0 on 19;
-  architecture a_control_unit of control_unit at 25( 710) + 0 on 20;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ULA/acumulador.vhd" "f44886d7cb5b456d9606d491dff1b09dc25972c2" "20250611053325.003":
-  entity acumulador at 1( 0) + 0 on 23;
-  architecture a_acumulador of acumulador at 15( 325) + 0 on 24;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../reg_16.vhd" "216d209e3bb458ea4999e3214f6ae31e59433611" "20250611053325.086":
-  entity reg_16 at 1( 0) + 0 on 27;
-  architecture a_reg16 of reg_16 at 15( 320) + 0 on 28;
-file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "processor.vhd" "37cb19a9b421474beae82fe3b59c8b88be10de7f" "20250611053325.182":
-  entity processor at 1( 0) + 0 on 31;
-  architecture a_processor of processor at 12( 186) + 0 on 32;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ROM/rom.vhd" "f7e8cda2dcf3510876688bac3523ed5f9706a5cc" "20250619044617.683":
+  entity rom at 1( 0) + 0 on 17;
+  architecture a_rom of rom at 13( 232) + 0 on 18;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../ControlUnit/control_unit.vhd" "6af517779988508c4aaef9192eaff8f63170c775" "20250619044617.797":
+  entity control_unit at 1( 0) + 0 on 21;
+  architecture a_control_unit of control_unit at 30( 838) + 0 on 22;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../Register1Bit/Register1bit.vhd" "3042269f2dc247123ed4f0b6ea565da2ff65324b" "20250619044617.899":
+  entity register1bit at 1( 0) + 0 on 25;
+  architecture a_register1bit of register1bit at 15( 290) + 0 on 26;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "../RegisterBank/RegisterBank.vhd" "f7ab272320db1d37583053dab9ff76156e68a932" "20250619044617.993":
+  entity registerbank at 1( 0) + 0 on 29;
+  architecture a_banco_reg of registerbank at 17( 482) + 0 on 30;
+file "C:\Users\gbspa\OneDrive\Documentos\dev\RISC-V\src\Processor\" "processor.vhd" "5fbdd44ab6b111aa22b48f572ad6b2c02a582758" "20250619044618.087":
+  entity processor at 1( 0) + 0 on 33;
+  architecture a_processor of processor at 12( 186) + 0 on 34;
