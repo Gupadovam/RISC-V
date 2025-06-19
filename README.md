@@ -34,6 +34,7 @@ The script will typically:
 |01101 	|bgt 	|OOOOO_XXX_AAAA_AAAA
 |01110 	|blt 	|OOOOO_XXX_AAAA_AAAA
 |01111 	|cmpr 	|OOOOO_XXX_XXXX_SSSS
+|10000 	|zac 	|OOOOO_XXX_XXXX_XXXX
 
 
 
