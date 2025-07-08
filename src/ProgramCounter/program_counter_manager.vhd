@@ -10,10 +10,10 @@ entity program_counter_manager is
         jump_en     : in  std_logic;
         jump_addr   : in  unsigned(9 downto 0);
         br_en       : in  std_logic;
-        br_addr     : in  unsigned(9 downto 0); -- Now a 10-bit offset
+        br_addr     : in  unsigned(9 downto 0);
         instruction : in  unsigned(13 downto 0);
-        beq_cond    : in  std_logic;
-        bhs_cond    : in  std_logic;
+        beq_cond    : in  std_logic; -- The Zero flag (Z)
+        bhs_cond    : in  std_logic; -- The Carry flag (C)
         data_out    : out unsigned(9 downto 0)
     );
 end entity;
@@ -53,10 +53,12 @@ begin
     -- Calculate relative branch target address
     branch_target_s <= unsigned(signed(pc_current_s) + signed(resize(br_addr, 10)));
 
-    -- Determine if a conditional branch should be taken
+    -- Determine if any conditional branch should be taken
     branch_taken_s <= '1' when (br_en = '1' and (
-                                (opcode = "1100" and beq_cond = '0') or -- BNE (Branch if Zero=0)
-                                (opcode = "1101" and bhs_cond = '1')    -- BHS (Branch if Carry=1)
+                                (opcode = "1100" and beq_cond = '0') or -- BNE (Branch if Z=0)
+                                (opcode = "1101" and bhs_cond = '1') or -- BHS (Branch if C=1)
+                                (opcode = "1110" and beq_cond = '1') or -- BEQ (Branch if Z=1)
+                                (opcode = "1111" and bhs_cond = '0')    -- BLT (Branch if C=0)
                                )) else '0';
 
     -- Select the next value for the Program Counter

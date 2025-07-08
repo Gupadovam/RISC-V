@@ -163,6 +163,17 @@ begin
                 br_en_out         <= '1';
                 br_addr_out       <= imm10;
 
+            -- beq offset
+            when "1110" =>
+                br_en_out         <= '1';
+                br_addr_out       <= imm10;
+
+            -- blt offset
+            when "1111" =>
+                br_en_out         <= '1';
+                br_addr_out       <= imm10;
+
+
             -- zac (Not in final ISA, but can be implemented as mov_to_acc with a zeroed register)
             -- For a dedicated instruction, you would add a new opcode.
             -- For now, use ldi R_zero, 0 and mov_to_acc R_zero.
