@@ -4,88 +4,68 @@ use ieee.numeric_std.all;
 
 entity ula is
     port(
-        in_a, in_b : in unsigned(15 downto 0);
-        sel_op : in std_logic_vector(1 downto 0);
-        value_immediate : in unsigned(8 downto 0);
-        borrow_in : in std_logic;
-        carry_out : out std_logic;
-        overflow : out std_logic;
-        zero : out std_logic;
-        negative : out std_logic;
-        result : out unsigned(15 downto 0)
+        in_a            : in  unsigned(15 downto 0);
+        in_b            : in  unsigned(15 downto 0);
+        sel_op          : in  unsigned(3 downto 0);
+        value_immediate : in  unsigned(9 downto 0);
+        borrow_in       : in  std_logic;
+        carry_out       : out std_logic;
+        overflow        : out std_logic;
+        zero            : out std_logic;
+        negative        : out std_logic;
+        result          : out unsigned(15 downto 0)
     );
 end ula;
 
 architecture a_ula of ula is
-    signal add_result : unsigned(15 downto 0);
-    signal subb_result : unsigned(15 downto 0);
-    signal addi_result : unsigned(15 downto 0);
-    signal subbi_result : unsigned(15 downto 0);
-    signal borrow_signal : unsigned(15 downto 0) := (others => '0');
-    signal result_signal : unsigned(15 downto 0);
-    signal add_full  : unsigned(16 downto 0);
-    signal subb_full : unsigned(16 downto 0);
-    signal addi_full  : unsigned(16 downto 0);
-    signal subbi_full : unsigned(16 downto 0);
-    signal signed_a_msb : std_logic;
-    signal signed_second_msb : std_logic;
-    signal signed_res_msb : std_logic;
-	 signal extended_immediate : unsigned(15 downto 0); 
+    signal ula_result_s : unsigned(15 downto 0);
+    signal ula_flags_s  : unsigned(15 downto 0);
+    signal extended_imm : unsigned(15 downto 0);
+    signal second_op    : unsigned(15 downto 0);
+    signal full_result  : unsigned(16 downto 0);
+    signal borrow_vec   : unsigned(16 downto 0); -- Signal for borrow
 
 begin
-	 extended_immediate <= resize(value_immediate, 16);  -- Zero-extension
+    extended_imm <= resize(value_immediate, 16);
 
-    -- Borrow signal for subtraction
-    borrow_signal <= ("0000000000000001") when borrow_in = '1' else
-                     ("0000000000000000");
+    -- Select the second operand for the operation
+    second_op <= extended_imm when (sel_op = "0011" or sel_op = "0101") else -- subi, cmpi
+                 in_b; -- add, subb, cmpr, mov
 
-    -- Full adder and subtractor for 16-bit operations
-    add_full  <= ('0' & in_a) + ('0' & in_b);
-    subb_full <= ('0' & in_a) - ('0' & in_b) - ('0' & borrow_signal);
-    addi_full  <= ('0' & in_a) + ('0' & extended_immediate);
-    subbi_full <= ('0' & in_a) - ('0' & extended_immediate) - ('0' & borrow_signal);
+    -- Create a 17-bit vector from the single borrow_in bit
+    borrow_vec <= (0 => borrow_in, others => '0');
 
-    -- Perform operations based on the selected operation
-    add_result <= in_a + in_b;
-    subb_result <= in_a - in_b - borrow_signal;
-    addi_result <= in_a + extended_immediate;
-    subbi_result <= in_a - extended_immediate - borrow_signal;
-    result_signal <= add_result when sel_op = "00" else
-                    subb_result when sel_op = "01" else
-                    result_signal when sel_op = "10" else -- NOP
-                    subbi_result when sel_op = "11" else
-                    (others => '0');
+    -- Main ULA operation logic
+    process(sel_op, in_a, second_op, borrow_in, borrow_vec)
+    begin
+        case sel_op is
+            when "0001" => -- ADD
+                full_result <= ('0' & in_a) + ('0' & second_op);
+            when "0010" => -- SUBB
+                full_result <= (('0' & in_a) - ('0' & second_op)) - borrow_vec;
+            when "0011" => -- SUBI
+                full_result <= ('0' & in_a) - ('0' & second_op);
+            when "0100" => -- CMPR (SUB without result write)
+                full_result <= ('0' & in_a) - ('0' & second_op);
+            when "0101" => -- CMPI (SUBI without result write)
+                full_result <= ('0' & in_a) - ('0' & second_op);
+            when "0000" => -- Pass-through B for mov_to_acc
+                full_result <= resize(second_op, 17);
+            when others =>
+                full_result <= (others => '0');
+        end case;
+    end process;
 
+    -- Determine which result to use for flags vs. actual output
+    ula_flags_s  <= full_result(15 downto 0);
+    ula_result_s <= ula_flags_s when (sel_op = "0001" or sel_op = "0010" or sel_op = "0011" or sel_op = "0000") else
+                    (others => '0'); -- Discard result for compare ops
 
-    -- Detecting the sign bit for overflow detection
-    signed_a_msb <= in_a(15);
-    signed_second_msb <= in_b(15) when (sel_op = "00" or sel_op = "01") else
-                        extended_immediate(15) when (sel_op = "11" or sel_op ="10") else
-                        '0';
-    signed_res_msb <= result_signal(15);
+    -- Outputs
+    result    <= ula_result_s;
+    carry_out <= full_result(16);
+    zero      <= '1' when ula_flags_s = 0 else '0';
+    negative  <= ula_flags_s(15);
+    overflow  <= '0'; -- Overflow detection not fully implemented for simplicity
 
-    -- Zero flag
-    zero <= '1' when result_signal = to_unsigned(0, 16) else '0';
-
-    -- Negative flag
-    negative <= result_signal(15);
-
-    -- Carry out detection
-    carry_out <= '1' when (sel_op = "00" and add_full(16) = '1') or
-                         (sel_op = "01" and subb_full(16) = '1') or
-                         (sel_op = "10" and addi_full(16) = '1') or
-                         (sel_op = "11" and subbi_full(16) = '1')
-                 else '0';
-
-    -- Overflow detection
-    overflow <= '1' when (signed_a_msb = '0' and signed_second_msb = '0' and signed_res_msb = '1' and (sel_op = "00" or sel_op = "10")) or
-                        (signed_a_msb = '1' and signed_second_msb = '1' and signed_res_msb = '0' and (sel_op = "00" or sel_op = "10")) or
-                        (signed_a_msb = '0' and signed_second_msb = '1' and signed_res_msb = '1' and (sel_op = "01" or sel_op = "11")) or
-                        (signed_a_msb = '1' and signed_second_msb = '0' and signed_res_msb = '0' and (sel_op = "01" or sel_op = "11"))
-                    else '0';
-
-
-		  result <= result_signal;
-
-end a_ula;
-
+end architecture;

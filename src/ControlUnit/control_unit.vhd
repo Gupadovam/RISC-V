@@ -4,134 +4,173 @@ use ieee.numeric_std.all;
 
 entity control_unit is
     port(
-		  clk : in std_logic;
-		  instruction : in unsigned(13 downto 0);
-		  estado : in unsigned(1 downto 0);
-		  br_en : out std_logic;
-		  br_addr : out unsigned(7 downto 0);
-		  br_cond : out unsigned(4 downto 0);
-		  reg_wr_en : out std_logic;
-		  sel_op_ula : out std_logic_vector(1 downto 0);
-		  source_reg : out unsigned(2 downto 0);
-		  destiny_reg : out unsigned(2 downto 0);
-		  jump_en : out std_logic;
-		  jump_addr : out unsigned(7 downto 0);
-		  acc_en : out std_logic;
-		  immediate : out unsigned(8 downto 0);
-		  sel_acc_src : out std_logic;
-		  borrow_in : out std_logic;
-		  pc_en : out std_logic;
-		  ir_en : out std_logic -- ir := instruction register
+        -- System Inputs
+        clk         : in  std_logic;
+        instruction : in  unsigned(13 downto 0);
+
+        -- Control Outputs
+        -- PC Control
+        jump_en_out     : out std_logic;
+        jump_addr_out   : out unsigned(9 downto 0);
+        br_en_out       : out std_logic;
+        br_addr_out     : out unsigned(9 downto 0);
+
+        -- Register Bank Control
+        reg_wr_en_out   : out std_logic;
+        reg_rd_sel_out  : out unsigned(2 downto 0);
+        reg_wr_sel_out  : out unsigned(2 downto 0);
+        
+        -- Accumulator Control
+        acc_en_out      : out std_logic;
+        rst_acc_out     : out std_logic;
+        
+        -- ULA Control
+        sel_op_ula_out  : out unsigned(3 downto 0); -- Extended to support more ops
+        flags_wr_en_out : out std_logic;
+        
+        -- Memory Control
+        ram_wr_en_out   : out std_logic;
+        ram_rd_en_out   : out std_logic;
+
+        -- Data Path Mux Selects & Immediate Value
+        sel_acc_input_out : out std_logic; -- '0' for ULA result, '1' for RAM data
+        sel_reg_input_out : out std_logic; -- '0' for Immediate, '1' for ACC
+        immediate_out     : out unsigned(9 downto 0)
     );
 end entity;
 
 architecture a_control_unit of control_unit is
-    signal opcode : unsigned(4 downto 0);
+    -- Instruction Fields
+    signal opcode : unsigned(3 downto 0);
+    signal ddd    : unsigned(2 downto 0); -- Destination Register
+    signal sss    : unsigned(2 downto 0); -- Source Register
+    signal aaa    : unsigned(2 downto 0); -- Address Register
+    signal imm7   : unsigned(6 downto 0);
+    signal imm10  : unsigned(9 downto 0);
 
-	constant FETCH : unsigned(1 downto 0) := "00";
-	constant DECODE : unsigned(1 downto 0) := "01";
-	constant EXECUTE : unsigned(1 downto 0) := "10";
 begin
+    -- Decode instruction fields
+    opcode <= instruction(13 downto 10);
+    ddd    <= instruction(9 downto 7);
+    sss    <= instruction(9 downto 7); -- SSS, DDD, AAA fields overlap
+    aaa    <= instruction(9 downto 7);
+    imm7   <= instruction(6 downto 0);
+    imm10  <= instruction(9 downto 0);
 
-	-- Extrai o opcode
-	opcode <= instruction(13 downto 9);
+    -- Combinational logic to generate control signals based on opcode
+    process(opcode, ddd, sss, aaa, imm7, imm10)
+    begin
+        -- Default values (inactive state)
+        jump_en_out       <= '0';
+        jump_addr_out     <= (others => '0');
+        br_en_out         <= '0';
+        br_addr_out       <= (others => '0');
+        reg_wr_en_out     <= '0';
+        reg_rd_sel_out    <= (others => '0');
+        reg_wr_sel_out    <= (others => '0');
+        acc_en_out        <= '0';
+        rst_acc_out       <= '0';
+        sel_op_ula_out    <= "0000"; -- Default to NOP/Pass
+        flags_wr_en_out   <= '0';
+        ram_wr_en_out     <= '0';
+        ram_rd_en_out     <= '0';
+        sel_acc_input_out <= '0'; -- Default to ULA result
+        sel_reg_input_out <= '0'; -- Default to Immediate
+        immediate_out     <= (others => '0');
 
-    -- verifica se eh branch
-    br_en <= '1' when (opcode>="00011" and opcode<="01000") else '0';
-    br_addr <= instruction(7 downto 0);
-    br_cond <= opcode; 
+        case opcode is
+            -- NOP
+            when "0000" =>
+                null; -- All signals remain at default
 
-	process(clk)
-	begin
-		if rising_edge(clk) then
-			case estado is
-				when FETCH =>
-					ir_en <= '0';
-					pc_en <= '0';
-					reg_wr_en <= '0';
-					acc_en <= '0';
-					jump_en <= '0';
-					immediate <= (others => '0');
-					sel_op_ula <= "10"; -- Default NOP
-					source_reg <= (others => '0');
-					destiny_reg <= (others => '0');
-					sel_acc_src <= '0';
-					borrow_in <= '0';
-					ir_en <= '1';
+            -- ldi Rd, imm
+            when "0001" =>
+                reg_wr_en_out     <= '1';
+                reg_wr_sel_out    <= ddd;
+                sel_reg_input_out <= '0'; -- Select immediate as input to reg bank
+                immediate_out     <= resize(imm7, immediate_out'length);
 
-				when DECODE =>
-					-- Ativa escrita em registrador (MOV e STORE escrevem fora do ACC)
-					if (opcode = "00101" or opcode = "01000") then -- MOV and STORE
-						reg_wr_en <= '1';
-					end if;
+            -- load [Ra]
+            when "0010" =>
+                acc_en_out        <= '1';
+                ram_rd_en_out     <= '1';
+                reg_rd_sel_out    <= aaa; -- Read address from register Ra
+                sel_acc_input_out <= '1'; -- Select RAM data as input to ACC
 
-					-- Registros destino (somente MOV e STORE)
-					if (opcode = "00101" or opcode = "01000") then -- MOV and STORE
-						destiny_reg <= instruction(2 downto 0);
-					end if;
+            -- store [Ra]
+            when "0011" =>
+                ram_wr_en_out     <= '1';
+                reg_rd_sel_out    <= aaa; -- Read address from register Ra
 
-				when EXECUTE =>
-					-- It activates the approp. control signals
-					pc_en <= '1';
+            -- mov_to_acc Rs
+            when "0100" =>
+                acc_en_out        <= '1';
+                reg_rd_sel_out    <= sss;
+                sel_op_ula_out    <= "0000"; -- Use ULA in pass-through mode (B)
+                sel_acc_input_out <= '0'; -- Select ULA result
 
-					-- Immediate: SUBBI 
-					if (opcode = "00011" or opcode = "00110") then
-						immediate <= instruction(8 downto 0);
-					else 
-						immediate <= (others => '0');
-					end if;
+            -- mov_from_acc Rd
+            when "0101" =>
+                reg_wr_en_out     <= '1';
+                reg_wr_sel_out    <= ddd;
+                sel_reg_input_out <= '1'; -- Select ACC as input to reg bank
 
-					-- Sinal de pulo
-					if opcode = "00100" then
-                        jump_en <= '1';
-                        jump_addr <= instruction(7 downto 0);
-                    end if;
+            -- add Rs
+            when "0110" =>
+                acc_en_out        <= '1';
+                flags_wr_en_out   <= '1';
+                reg_rd_sel_out    <= sss;
+                sel_op_ula_out    <= "0001"; -- ULA OP: ADD
 
-					-- Seleção da operação da ULA
-					if opcode = "00001" then    -- ADD
-                        sel_op_ula <= "00";
-                    elsif opcode = "00010" then -- SUBB
-                        sel_op_ula <= "01";
-                    elsif opcode = "00011" then -- SUBBI
-                        sel_op_ula <= "11";
-                    end if;
+            -- subb Rs
+            when "0111" =>
+                acc_en_out        <= '1';
+                flags_wr_en_out   <= '1';
+                reg_rd_sel_out    <= sss;
+                sel_op_ula_out    <= "0010"; -- ULA OP: SUBB
 
-					-- Ativa escrita no acumulador (único destino em ADD, SUBB, etc.)
-					if (opcode = "00001" or          -- ADD
-						opcode = "00010" or          -- SUBB
-						opcode = "00011" or          -- SUBBI
-						opcode = "00110" or          -- LDI
-						opcode = "00111") then       -- LOAD
-						acc_en <= '1';
-					end if;
+            -- subi imm
+            when "1000" =>
+                acc_en_out        <= '1';
+                flags_wr_en_out   <= '1';
+                sel_op_ula_out    <= "0011"; -- ULA OP: SUBI
+                immediate_out     <= imm10;
 
-					-- Registros fonte
-				    if (opcode = "00001" or          -- ADD
-						opcode = "00010" or          -- SUBB
-						opcode = "00111") then       -- LOAD
-						source_reg <= instruction(2 downto 0);
-					elsif opcode = "00101" then      -- MOV
-						source_reg <= instruction(5 downto 3);
-					end if;
-							
-					-- Entrada do ACC: resultado da ULA ou dado direto do registrador
-					if opcode = "00111" then         -- LOAD
-						sel_acc_src <= '1';
-					end if;
+            -- cmpr Rs
+            when "1001" =>
+                flags_wr_en_out   <= '1';
+                reg_rd_sel_out    <= sss;
+                sel_op_ula_out    <= "0100"; -- ULA OP: CMP (SUB without write)
 
-					-- Sinal de borrow para SUBB e SUBBI
-					if (opcode = "00010" or opcode = "00011") then -- SUBB or SUBBI
-						borrow_in <= '1';
-					end if;
+            -- cmpi imm
+            when "1010" =>
+                flags_wr_en_out   <= '1';
+                sel_op_ula_out    <= "0101"; -- ULA OP: CMPI (SUBI without write)
+                immediate_out     <= imm10;
 
-				when others =>
-					-- It handles others states
-					ir_en <= '0';
-					pc_en <= '0';
-					reg_wr_en <= '0';
-					acc_en <= '0';
-					jump_en <= '0';
-			end case;
-		end if;
-	end process;
+            -- jump addr
+            when "1011" =>
+                jump_en_out       <= '1';
+                jump_addr_out     <= imm10;
+
+            -- bne offset
+            when "1100" =>
+                br_en_out         <= '1';
+                br_addr_out       <= imm10;
+
+            -- bhs offset
+            when "1101" =>
+                br_en_out         <= '1';
+                br_addr_out       <= imm10;
+
+            -- zac (Not in final ISA, but can be implemented as mov_to_acc with a zeroed register)
+            -- For a dedicated instruction, you would add a new opcode.
+            -- For now, use ldi R_zero, 0 and mov_to_acc R_zero.
+            
+            when others =>
+                null; -- All signals remain at default
+
+        end case;
+    end process;
+
 end architecture;

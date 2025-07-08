@@ -3,94 +3,52 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity rom is
-   port(
-      clk : in std_logic;
-      endereco : in unsigned(7 downto 0);
-      dado : out unsigned(13 downto 0) 
-   );
+    port(
+        clk      : in  std_logic;
+        endereco : in  unsigned(9 downto 0);
+        dado     : out unsigned(13 downto 0)
+    );
 end entity;
 
 architecture a_rom of rom is
-   type mem is array (0 to 127) of unsigned(13 downto 0);
-   constant conteudo_rom : mem := (
-   -- lab 6.
-   -- A. Carrega R3 com o valor 0
-      0 => B"00110_000_000_000", -- LDI 0
-      1 => B"01000_000_000_011", -- STORE ACC -> R3
+    type mem is array (0 to 1023) of unsigned(13 downto 0);
 
-   -- B. Carrega R4 com 0
-      3 => B"00110_000_000_000", -- LDI 0
-      4 => B"01000_000_000_100", -- STORE ACC -> R4
-
-   -- C. Soma R3 com R4 e guarda em R4
-      5 => B"00111_000_000_011", -- LOAD R3
-      6 => B"00001_000_000_100", -- ADD R4
-      7 => B"01000_000_000_100", -- STORE R4
-
-   -- D. Soma 1 em R3
-      8 => B"00110_000_000_001", -- LDI 1
-      9 => B"00001_000_000_011", -- ADD R3
-      10 => B"01000_000_000_011", -- STORE R3
-
-   -- E. Se R3<R0 salta para a instrucao do passo C
-
-   -- F. Copia valor de R4 para R5
-
-	-- precisa zerar acc
-	-- problema de sincronia pra desativar o acc
-   -- A. Carrega R3 com o valor 5 (LDI + STORE)
-   --    0 => B"00110_000_000_101", -- LDI 5
-   --    1 => B"01000_000_000_010", -- STORE ACC -> R3
-
-   -- -- B. Carrega R4 com o valor 8 (LDI + STORE)
-   --    2 => B"00110_000_001_000", -- LDI 8
-   --    3 => B"01000_000_000_011", -- STORE ACC -> R4
-
-   -- -- C. Soma R3 com R4 e guarda em R5 (LOAD R3 + ADD R4 + STORE R5)
-   --    4 => B"00111_000_000_010", -- LOAD R3 -> ACC
-   --    5 => B"00001_000_000_011", -- ADD ACC, ACC, R4
-   --    6 => B"01000_000_000_100", -- STORE ACC -> R5
-
-   -- -- D. Subtrai 1 de R5 (LOAD R5 + SUBBI 1 + STORE R5)
-   --    7 => B"00111_000_000_100", -- LOAD R5 -> ACC
-   --    8 => B"00011_000_000_001", -- SUBBI ACC, ACC, 1
-   --    9 => B"01000_000_000_100", -- STORE ACC -> R5
-
-   -- -- E. Salta para o endereço 20
-   --   10 => B"00100_0_0001_0100", -- JUMP 20
-
-   -- -- F. Zera R5 (não será executado)
-   --   11 => B"00110_000_000_000", -- LDI 0
-   --   12 => B"01000_000_000_100", -- STORE ACC -> R5
-
-   -- -- NOPs
-   --   13 => B"00000_0_0000_0000",
-   --   14 => B"00000_0_0000_0000",
-   --   15 => B"00000_0_0000_0000",
-   --   16 => B"00000_0_0000_0000",
-   --   17 => B"00000_0_0000_0000",
-   --   18 => B"00000_0_0000_0000",
-   --   19 => B"00000_0_0000_0000",
-
-   -- -- G. Copia R5 para R3 (LOAD R5 + STORE R3)
-   --   20 => B"00111_000_000_100", -- LOAD R5 -> ACC
-   --   21 => B"01000_000_000_010", -- STORE ACC -> R3
-
-   -- -- H. Salta para o passo C (endereço 4)
-   --   22 => B"00100_0_0000_0100", -- JUMP 4
-
-   -- -- I. Zera R3 (não será executado)
-   --   23 => B"00110_000_000_000", -- LDI 0
-   --   24 => B"01000_000_000_010", -- STORE ACC -> R3
-
-     others => (others => '0')
-   );
-
+    constant conteudo_rom : mem := (
+        -- R0: Constant 0, R1: Constant 1, R2: Address Counter, R3: Loop Limit, R4: Sieve Step
+        0  => B"0001_001_0000001", -- ldi R1, 1
+        1  => B"0001_010_0000001", -- ldi R2, 1
+        2  => B"0001_011_0100001", -- ldi R3, 33
+        -- fill_loop:
+        3  => B"0100_010_0000000", -- mov_to_acc R2
+        4  => B"0011_010_0000000", -- store [R2]
+        5  => B"0100_010_0000000", -- mov_to_acc R2
+        6  => B"0110_001_0000000", -- add R1
+        7  => B"0101_010_0000000", -- mov_from_acc R2
+        8  => B"1001_011_0000000", -- cmpr R3
+        9  => B"1100_1111111001", -- bne -7 (to addr 3)
+        -- Sieve for 2
+        10 => B"0001_000_0000000", -- ldi R0, 0
+        11 => B"0001_100_0000010", -- ldi R4, 2
+        12 => B"0001_010_0000100", -- ldi R2, 4
+        -- sieve_loop_2:
+        13 => B"0100_000_0000000", -- mov_to_acc R0
+        14 => B"0011_010_0000000", -- store [R2]
+        15 => B"0100_010_0000000", -- mov_to_acc R2
+        16 => B"0110_100_0000000", -- add R4
+        17 => B"0101_010_0000000", -- mov_from_acc R2
+        18 => B"1001_011_0000000", -- cmpr R3
+        19 => B"1101_0000000001", -- bhs +1 (Branch to HALT)
+        20 => B"1011_0000001101", -- jump 13
+        -- HALT
+        21 => B"1011_0000010101", -- jump 21
+        
+        others => (others => '0')
+    );
 begin
-   process(clk)
-   begin
-      if rising_edge(clk) then
-         dado <= conteudo_rom(to_integer(endereco));
-      end if;
-   end process;
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            dado <= conteudo_rom(to_integer(endereco));
+        end if;
+    end process;
 end architecture;
