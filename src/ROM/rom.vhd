@@ -19,11 +19,13 @@ architecture a_rom of rom is
 
     constant conteudo_rom : mem := (
         -- ===================================================
-        -- Part 1: Sieve of Eratosthenes (Unchanged)
+        -- Part 1: Sieve of Eratosthenes
         -- ===================================================
+        -- R0=0, R1=1, R2=Addr_Counter, R3=Limit(33), R4=Sieve_Step
         0  => B"0001_001_0000001", -- ldi R1, 1
         1  => B"0001_010_0000001", -- ldi R2, 1
         2  => B"0001_011_0100001", -- ldi R3, 33
+        -- fill_loop:
         3  => B"0100_010_0000000", -- mov_to_acc R2
         4  => B"0011_010_0000000", -- store [R2]
         5  => B"0100_010_0000000", -- mov_to_acc R2
@@ -31,88 +33,108 @@ architecture a_rom of rom is
         7  => B"0101_010_0000000", -- mov_from_acc R2
         8  => B"1001_011_0000000", -- cmpr R3
         9  => B"1100_1111111001", -- bne -7 (to addr 3)
+        -- Sieve for 2
         10 => B"0001_000_0000000", -- ldi R0, 0
         11 => B"0001_100_0000010", -- ldi R4, 2
         12 => B"0001_010_0000100", -- ldi R2, 4
+        -- sieve_loop_2:
         13 => B"0100_000_0000000", -- mov_to_acc R0
         14 => B"0011_010_0000000", -- store [R2]
         15 => B"0100_010_0000000", -- mov_to_acc R2
         16 => B"0110_100_0000000", -- add R4
         17 => B"0101_010_0000000", -- mov_from_acc R2
         18 => B"1001_011_0000000", -- cmpr R3
-        19 => B"1101_0000000010", -- bhs +2 (to addr 22)
+        19 => B"1101_0000000010", -- bhs +2 (to addr 22, end of loop)
         20 => B"1011_0000001101", -- jump 13
-        21 => B"1011_0000010110", -- jump 22 (Proceed to CTZ)
+        21 => B"1011_0000010110", -- jump 22 (Proceed to Sieve for 3)
+
+        --  Sieve for 3
+        22 => B"0001_100_0000011", -- ldi R4, 3
+        23 => B"0001_010_0000110", -- ldi R2, 6
+        -- sieve_loop_3:
+        24 => B"0100_000_0000000", -- mov_to_acc R0
+        25 => B"0011_010_0000000", -- store [R2]
+        26 => B"0100_010_0000000", -- mov_to_acc R2
+        27 => B"0110_100_0000000", -- add R4
+        28 => B"0101_010_0000000", -- mov_from_acc R2
+        29 => B"1001_011_0000000", -- cmpr R3
+        30 => B"1101_0000000010", -- bhs +2 (to addr 33, end of loop)
+        31 => B"1011_0000011000", -- jump 24
+        32 => B"1011_0000100001", -- jump 33 (Proceed to Sieve for 5)
+
+        -- Sieve for 5
+        33 => B"0001_100_0000101", -- ldi R4, 5
+        34 => B"0001_010_0001010", -- ldi R2, 10
+        -- sieve_loop_5:
+        35 => B"0100_000_0000000", -- mov_to_acc R0
+        36 => B"0011_010_0000000", -- store [R2]
+        37 => B"0100_010_0000000", -- mov_to_acc R2
+        38 => B"0110_100_0000000", -- add R4
+        39 => B"0101_010_0000000", -- mov_from_acc R2
+        40 => B"1001_011_0000000", -- cmpr R3
+        41 => B"1101_0000000010", -- bhs +2 (to addr 44, end of loop)
+        42 => B"1011_0000100011", -- jump 35
+        43 => B"1011_0000101100", -- jump 44 (Proceed to CTZ)
 
         -- ===================================================
-        -- Part 2: CTZ Algorithm (Count Trailing Zeros)
+        -- Part 2: CTZ Algorithm (Re-addressed)
         -- ===================================================
-        -- R0=count, R1=number_to_test (96), R2=divisor(2), R3=quotient, R4=const_1
-        22 => B"0001_000_0000000", -- ldi R0, 0       (count=0)
-        23 => B"0001_001_1100000", -- ldi R1, 96      (number=96)
-        24 => B"0001_010_0000010", -- ldi R2, 2       (divisor=2)
-        25 => B"0001_100_0000001", -- ldi R4, 1       (const 1)
-        -- ctz_outer_loop:
-        26 => B"0100_001_0000000", -- mov_to_acc R1   (ACC = number)
-        27 => B"0001_011_0000000", -- ldi R3, 0       (quotient=0)
-        -- ctz_mod2_loop:
-        28 => B"1001_010_0000000", -- cmpr R2         (is ACC < 2?)
-        29 => B"1111_0000001000", -- blt +8 (to addr 38, end of mod2)
-        30 => B"0111_010_0000000", -- subb R2         (ACC = ACC - 2)
-        31 => B"0101_001_0000000", -- mov_from_acc R1 (Save new remainder to R1)
-        32 => B"0100_011_0000000", -- mov_to_acc R3   (Load quotient)
-        33 => B"0110_100_0000000", -- add R4          (quotient++)
-        34 => B"0101_011_0000000", -- mov_from_acc R3 (Save new quotient)
-        35 => B"0100_001_0000000", -- mov_to_acc R1   (Restore new remainder to ACC)
-        36 => B"1011_0000011100", -- jump 28         (Loop back)
-        -- check_remainder:
-        37 => B"1010_0000000000", -- cmpi 0          (is remainder 0?)
-        38 => B"1100_0000000101", -- bne +5 (to addr 44, end_ctz)
-        39 => B"0100_000_0000000", -- mov_to_acc R0   (Load count)
-        40 => B"0110_100_0000000", -- add R4          (count++)
-        41 => B"0101_000_0000000", -- mov_from_acc R0 (Save count)
-        42 => B"0100_011_0000000", -- mov_to_acc R3   (ACC = quotient from mod2)
-        43 => B"0101_001_0000000", -- mov_from_acc R1 (number = quotient)
-        44 => B"1011_0000011010", -- jump 26         (next iteration)
-        -- end_ctz:
-        45 => B"0100_000_0000000", -- mov_to_acc R0   (ACC = final count)
-        46 => B"1010_0000000101", -- cmpi 5
-        47 => B"1100_0001010100", -- bne +20 (to FAIL_HALT at addr 68)
-        48 => B"1011_0000110001", -- jump 49 (Proceed to Divisor Finder)
+        44 => B"0001_000_0000000", -- ldi R0, 0
+        45 => B"0001_001_1100000", -- ldi R1, 96
+        46 => B"0001_010_0000010", -- ldi R2, 2
+        47 => B"0001_100_0000001", -- ldi R4, 1
+        48 => B"0100_001_0000000", -- mov_to_acc R1
+        49 => B"0001_011_0000000", -- ldi R3, 0
+        50 => B"1001_010_0000000", -- cmpr R2
+        51 => B"1111_0000001000", -- blt +8 (to addr 60)
+        52 => B"0111_010_0000000", -- subb R2
+        53 => B"0101_001_0000000", -- mov_from_acc R1
+        54 => B"0100_011_0000000", -- mov_to_acc R3
+        55 => B"0110_100_0000000", -- add R4
+        56 => B"0101_011_0000000", -- mov_from_acc R3
+        57 => B"0100_001_0000000", -- mov_to_acc R1
+        58 => B"1011_0000110010", -- jump 50
+        59 => B"1010_0000000000", -- cmpi 0
+        60 => B"1100_0000000101", -- bne +5 (to addr 66)
+        61 => B"0100_000_0000000", -- mov_to_acc R0
+        62 => B"0110_100_0000000", -- add R4
+        63 => B"0101_000_0000000", -- mov_from_acc R0
+        64 => B"0100_011_0000000", -- mov_to_acc R3
+        65 => B"0101_001_0000000", -- mov_from_acc R1
+        66 => B"1011_0000110000", -- jump 48
+        67 => B"0100_000_0000000", -- mov_to_acc R0
+        68 => B"1010_0000000101", -- cmpi 5
+        69 => B"1100_0001010100", -- bne +20 (to FAIL_HALT at addr 90)
+        70 => B"1011_0001000111", -- jump 71
 
         -- ===================================================
-        -- Part 3: Prime Divisor Finder (for constant 99)
+        -- Part 3: Prime Divisor Finder (Re-addressed)
         -- ===================================================
-        -- R0=const(99), R1=prime_ptr, R2=current_prime, R3=temp_const, R4=addr_101
-        49 => B"0001_000_1100011", -- ldi R0, 99
-        50 => B"0001_001_0000010", -- ldi R1, 2      (prime ptr starts at 2)
-        -- find_divisor_loop:
-        51 => B"0010_001_0000000", -- load [R1]      (ACC = prime from RAM)
-        52 => B"0101_010_0000000", -- mov_from_acc R2 (R2 = current_prime)
-        53 => B"0100_000_0000000", -- mov_to_acc R0  (ACC = const)
-        -- mod_loop:
-        54 => B"1001_010_0000000", -- cmpr R2        (is ACC < prime?)
-        55 => B"1111_0000000101", -- blt +5 (to addr 61, end of mod)
-        56 => B"0111_010_0000000", -- subb R2
-        57 => B"1011_0000110110", -- jump 54
-        -- check_mod_result:
-        58 => B"1010_0000000000", -- cmpi 0         (is remainder 0?)
-        59 => B"1110_0000000101", -- beq +5 (to addr 65, found!)
-        60 => B"0100_001_0000000", -- mov_to_acc R1  (Load ptr)
-        61 => B"0110_100_0000000", -- add R4         (ptr++)
-        62 => B"0101_001_0000000", -- mov_from_acc R1(update ptr)
-        63 => B"1011_0000110011", -- jump 51        (next prime)
-        -- found_divisor:
-        64 => B"0001_100_1100101", -- ldi R4, 101
-        65 => B"0100_010_0000000", -- mov_to_acc R2
-        66 => B"0011_100_0000000", -- store [R4]
-        67 => B"1011_0001000111", -- jump 71 (SUCCESS_HALT)
+        71 => B"0001_000_1100011", -- ldi R0, 99
+        72 => B"0001_001_0000010", -- ldi R1, 2
+        73 => B"0010_001_0000000", -- load [R1]
+        74 => B"0101_010_0000000", -- mov_from_acc R2
+        75 => B"0100_000_0000000", -- mov_to_acc R0
+        76 => B"1001_010_0000000", -- cmpr R2
+        77 => B"1111_0000000101", -- blt +5 (to addr 83)
+        78 => B"0111_010_0000000", -- subb R2
+        79 => B"1011_0001001100", -- jump 76
+        80 => B"1010_0000000000", -- cmpi 0
+        81 => B"1110_0000000101", -- beq +5 (to addr 87)
+        82 => B"0100_001_0000000", -- mov_to_acc R1
+        83 => B"0110_100_0000000", -- add R4
+        84 => B"0101_001_0000000", -- mov_from_acc R1
+        85 => B"1011_0001001001", -- jump 73
+        86 => B"0001_100_1100101", -- ldi R4, 101
+        87 => B"0100_010_0000000", -- mov_to_acc R2
+        88 => B"0011_100_0000000", -- store [R4]
+        89 => B"1011_0001011011", -- jump 91 (SUCCESS_HALT)
 
         -- ===================================================
-        -- HALT States
+        -- HALT States (Re-addressed)
         -- ===================================================
-        68 => B"1011_0001001000", -- FAIL_HALT: jump 68
-        71 => B"1011_0001000111", -- SUCCESS_HALT: jump 71
+        90 => B"1011_0001011010", -- FAIL_HALT: jump 90
+        91 => B"1011_0001011011", -- SUCCESS_HALT: jump 91
 
         others => (others => '0')
     );
